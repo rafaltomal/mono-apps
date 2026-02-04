@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Timer - Mono Apps</title>
+    <link rel="icon" type="image/png" href="../../assets/favicons/focus-timer.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/css/styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.5">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <a href="../../index.html" class="app-sidebar-back">← Back</a>
+            <nav class="app-sidebar-nav">
+                <a href="../focus-flow/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-flow.svg" alt="" width="16" height="16"></span>
+                    Focus Flow
+                </a>
+                <a href="../focus-timer/index.html" class="app-nav-item active">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-timer.svg" alt="" width="16" height="16"></span>
+                    Focus Timer
+                </a>
+                <a href="../daily-tasks/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/daily tasks.svg" alt="" width="16" height="16"></span>
+                    Daily Tasks
+                </a>
+                <a href="../habit-tracker/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/habit tracker.svg" alt="" width="16" height="16"></span>
+                    Habit Tracker
+                </a>
+                <a href="../workout-planner/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/workout tracker.svg" alt="" width="16" height="16"></span>
+                    Workout Tracker
+                </a>
+            </nav>
+        </aside>
+
+        <main class="app-main">
+            <a href="../../index.html" class="mobile-back-btn">← Back</a>
+
+            <div class="timer-container">
+                <!-- Mode Toggle -->
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="work">Work</button>
+                    <button class="mode-btn" data-mode="break">Break</button>
+                </div>
+
+                <!-- Timer Circle -->
+                <div class="timer-circle-wrapper">
+                    <svg class="timer-circle" viewBox="0 0 200 200">
+                        <circle class="timer-bg" cx="100" cy="100" r="90" />
+                        <circle class="timer-progress" cx="100" cy="100" r="90" />
+                    </svg>
+                    <div class="timer-content">
+                        <button class="time-btn minus" id="decrease-time">−</button>
+                        <div class="timer-display">
+                            <span class="timer-minutes" id="timer-display">25:00</span>
+                        </div>
+                        <button class="time-btn plus" id="increase-time">+</button>
+                    </div>
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="timer-controls">
+                    <button class="control-btn" id="start-btn">Start</button>
+                    <button class="control-btn secondary" id="reset-btn">Reset</button>
+                </div>
+
+                <!-- Session Info -->
+                <div class="session-info">
+                    <div class="session-stat">
+                        <span class="stat-label">Sessions</span>
+                        <span class="stat-value" id="session-count">0</span>
+                    </div>
+                    <div class="session-stat">
+                        <span class="stat-label">Total Today</span>
+                        <span class="stat-value" id="total-time">0m</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

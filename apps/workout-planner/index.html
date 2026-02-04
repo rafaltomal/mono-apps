@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker - Mono Dashboard</title>
+    <link rel="icon" type="image/png" href="../../assets/favicons/workout tracker.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/css/styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.5">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <a href="../../index.html" class="app-sidebar-back">
+                <span>←</span>
+                <span>Back</span>
+            </a>
+            <nav class="app-sidebar-nav">
+                <a href="../focus-flow/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-flow.svg" alt="" width="16" height="16"></span>
+                    <span>Focus Flow</span>
+                </a>
+                <a href="../focus-timer/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-timer.svg" alt="" width="16" height="16"></span>
+                    <span>Focus Timer</span>
+                </a>
+                <a href="../daily-tasks/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/daily tasks.svg" alt="" width="16" height="16"></span>
+                    <span>Daily Tasks</span>
+                </a>
+                <a href="../habit-tracker/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/habit tracker.svg" alt="" width="16" height="16"></span>
+                    <span>Habit Tracker</span>
+                </a>
+                <a href="../workout-planner/index.html" class="app-nav-item active">
+                    <span class="app-nav-icon"><img src="../../assets/icons/workout tracker.svg" alt="" width="16" height="16"></span>
+                    <span>Workout Tracker</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="app-main">
+            <a href="../../index.html" class="mobile-back-btn">← Back</a>
+
+            <h1 class="page-title">WORKOUT TRACKER</h1>
+
+            <!-- Week Navigation -->
+            <div class="week-nav">
+                <button class="btn btn-icon" id="prev-week">←</button>
+                <span class="week-title" id="week-title">Feb 2 - Feb 8</span>
+                <button class="btn btn-icon" id="next-week">→</button>
+            </div>
+
+            <!-- Day Tabs -->
+            <div class="day-tabs" id="day-tabs">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Workouts List -->
+            <div class="workouts-list" id="workouts-list">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Add Workout Button -->
+            <button class="btn-add-workout" id="add-workout-btn">+ ADD WORKOUT</button>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

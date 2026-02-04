@@ -1,0 +1,242 @@
+/* Focus Timer - App-Specific Styles */
+
+/* Prevent double-tap zoom on iOS */
+* {
+    touch-action: manipulation;
+}
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px);
+    padding: var(--spacing-xl);
+}
+
+/* Mode Toggle */
+.mode-toggle {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.mode-btn {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: var(--border);
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: var(--color-muted);
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mode-btn:hover {
+    border-color: var(--color-border-dark);
+    color: var(--color-primary);
+}
+
+.mode-btn.active {
+    background: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+/* Timer Circle */
+.timer-circle-wrapper {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.timer-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-bg {
+    fill: none;
+    stroke: var(--color-surface);
+    stroke-width: 6;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48; /* 2 * PI * 90 */
+    stroke-dashoffset: 565.48;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.timer-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+}
+
+/* Time Adjust Buttons */
+.time-btn {
+    width: 56px;
+    height: 56px;
+    border: var(--border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-primary);
+    font-size: var(--font-size-2xl);
+    font-weight: 400;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-dark);
+}
+
+.time-btn:active {
+    background: var(--color-surface);
+}
+
+.time-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Timer Display */
+.timer-display {
+    text-align: center;
+}
+
+.timer-minutes {
+    font-size: 4rem;
+    font-weight: 600;
+    letter-spacing: -2px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Timer Controls */
+.timer-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.control-btn {
+    padding: var(--spacing-md) var(--spacing-2xl);
+    border: var(--border);
+    border-radius: var(--border-radius-sm);
+    background: var(--color-primary);
+    color: var(--color-background);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 120px;
+}
+
+.control-btn:hover {
+    background: #e0e0e0;
+}
+
+.control-btn.secondary {
+    background: transparent;
+    color: var(--color-primary);
+}
+
+.control-btn.secondary:hover {
+    background: var(--color-surface-hover);
+}
+
+/* Session Info */
+.session-info {
+    display: flex;
+    gap: var(--spacing-3xl);
+}
+
+.session-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+/* Running State */
+.timer-container.running .time-btn {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.timer-container.running .mode-toggle {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Break Mode Styling */
+.timer-container.break-mode .timer-progress {
+    stroke: var(--color-success);
+}
+
+.timer-container.break-mode .control-btn:not(.secondary) {
+    background: var(--color-success);
+}
+
+.timer-container.break-mode .control-btn:not(.secondary):hover {
+    background: #2db84e;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .timer-circle-wrapper {
+        width: 340px;
+        height: 340px;
+    }
+
+    .timer-minutes {
+        font-size: 3.5rem;
+    }
+
+    .time-btn {
+        width: 48px;
+        height: 48px;
+        font-size: var(--font-size-xl);
+    }
+
+    .timer-content {
+        gap: var(--spacing-lg);
+    }
+
+    .control-btn {
+        min-width: 100px;
+        padding: var(--spacing-sm) var(--spacing-lg);
+    }
+
+    .session-info {
+        gap: var(--spacing-2xl);
+    }
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Flow - Mono Apps</title>
+    <link rel="icon" type="image/png" href="../../assets/favicons/focus-flow.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/css/styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.5">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <a href="../../index.html" class="app-sidebar-back">← Back</a>
+            <nav class="app-sidebar-nav">
+                <a href="../focus-flow/index.html" class="app-nav-item active">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-flow.svg" alt="" width="16" height="16"></span>
+                    Focus Flow
+                </a>
+                <a href="../focus-timer/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-timer.svg" alt="" width="16" height="16"></span>
+                    Focus Timer
+                </a>
+                <a href="../daily-tasks/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/daily tasks.svg" alt="" width="16" height="16"></span>
+                    Daily Tasks
+                </a>
+                <a href="../habit-tracker/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/habit tracker.svg" alt="" width="16" height="16"></span>
+                    Habit Tracker
+                </a>
+                <a href="../workout-planner/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/workout tracker.svg" alt="" width="16" height="16"></span>
+                    Workout Tracker
+                </a>
+            </nav>
+        </aside>
+
+        <main class="app-main">
+            <a href="../../index.html" class="mobile-back-btn">← Back</a>
+            <div class="app">
+                <!-- Screen 1: Task Input -->
+                <section id="input-screen" class="screen active">
+                    <div class="screen-content">
+                        <form id="task-form" class="task-form">
+                            <div class="form-group">
+                                <label for="task-input">Tasks</label>
+                                <p class="hint">Use - or * at the start of each line</p>
+                                <textarea
+                                    id="task-input"
+                                    placeholder="- Write project proposal&#10;- Review design mockups&#10;- Send client update&#10;- Prepare presentation slides"
+                                    rows="8"
+                                ></textarea>
+                            </div>
+
+                            <div class="config-section">
+                                <div class="config-grid">
+                                    <div class="config-group">
+                                        <label for="start-date">Start date</label>
+                                        <input type="date" id="start-date">
+                                    </div>
+                                    <div class="config-group">
+                                        <label for="tasks-per-day">Tasks per day</label>
+                                        <input type="number" id="tasks-per-day" class="input-sm" min="1" max="99" value="3">
+                                    </div>
+                                </div>
+
+                                <div class="config-group">
+                                    <label>Working days</label>
+                                    <div class="day-buttons">
+                                        <button type="button" class="day-btn active" data-day="1">Mon</button>
+                                        <button type="button" class="day-btn active" data-day="2">Tue</button>
+                                        <button type="button" class="day-btn active" data-day="3">Wed</button>
+                                        <button type="button" class="day-btn active" data-day="4">Thu</button>
+                                        <button type="button" class="day-btn active" data-day="5">Fri</button>
+                                        <button type="button" class="day-btn" data-day="6">Sat</button>
+                                        <button type="button" class="day-btn" data-day="0">Sun</button>
+                                    </div>
+                                    <input type="hidden" name="working-days" id="working-days" value="1,2,3,4,5">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg">Start Focus Flow</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Screen 2: Main View (Timeline + Tasks) -->
+                <section id="main-screen" class="screen">
+                    <div class="screen-content">
+                        <!-- Timeline Calendar -->
+                        <div class="timeline-container">
+                            <div class="timeline-scroll" id="timeline">
+                                <!-- Timeline days rendered here -->
+                            </div>
+                        </div>
+
+                        <!-- Task Panel -->
+                        <div class="task-panel" id="todo-panel">
+                            <div class="panel-header">
+                                <span>Tasks:</span>
+                                <div class="panel-actions">
+                                    <button class="btn btn-sm" id="edit-tasks-btn">Edit</button>
+                                    <button class="btn btn-sm" id="start-over-btn">Reset</button>
+                                </div>
+                            </div>
+                            <div class="task-list" id="todo-list">
+                                <!-- Tasks rendered here -->
+                            </div>
+                        </div>
+
+                        <!-- Progress Footer -->
+                        <div class="progress-footer">
+                            <span id="progress-text">0%</span>
+                            <div class="progress-bar-mini">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                            <span id="streak-text">0 day streak</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Celebration Overlay -->
+                <div class="celebration-overlay" id="celebration">
+                    <div class="celebration-content">
+                        <div class="celebration-checkmark">✓</div>
+                        <div class="celebration-message" id="celebration-message">Great work!</div>
+                    </div>
+                </div>
+
+                <!-- Edit Tasks Modal -->
+                <div class="modal" id="edit-modal">
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h2>Edit Tasks</h2>
+                            <button class="modal-close" id="close-modal">&times;</button>
+                        </header>
+                        <form id="edit-form">
+                            <div class="form-group">
+                                <label for="edit-task-input">Your tasks</label>
+                                <textarea id="edit-task-input" rows="10"></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" class="btn" id="cancel-edit">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

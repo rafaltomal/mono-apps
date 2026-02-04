@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mono Dashboard</title>
+    <link rel="icon" type="image/png" href="assets/favicons/mono-apps.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared/css/styles.css?v=1.5">
+    <style>
+        /* Dashboard - Two column layout */
+        .dashboard {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: var(--spacing-3xl);
+            padding: var(--spacing-3xl);
+        }
+
+        .dashboard-sidebar {
+            position: sticky;
+            top: var(--spacing-3xl);
+            height: fit-content;
+        }
+
+        .dashboard-sidebar h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 500;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .dashboard-description {
+            color: var(--color-muted);
+            font-size: var(--font-size-sm);
+            line-height: 1.7;
+        }
+
+        .dashboard-description p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature-list li {
+            color: var(--color-muted);
+            font-size: var(--font-size-xs);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--color-primary);
+            font-size: var(--font-size-xs);
+        }
+
+        .dashboard-content {
+            width: 100%;
+        }
+
+        .section-label {
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .data-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-xl);
+            border-top: var(--border);
+        }
+
+        .data-actions .btn {
+            flex: 1;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-xl);
+            }
+
+            .dashboard-sidebar {
+                position: static;
+            }
+
+            .app-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .app-grid {
+                gap: var(--spacing-sm);
+            }
+
+            .app-card {
+                padding: var(--spacing-lg);
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="dashboard-sidebar">
+            <h1>Mono Apps</h1>
+            <div class="dashboard-description">
+                <p>Simple productivity tools that respect your privacy.</p>
+                <ul class="feature-list">
+                    <li>Free to use and copy, no registration required</li>
+                    <li>Data saved locally in your browser</li>
+                    <li>Works offline</li>
+                </ul>
+            </div>
+
+            <div class="data-actions">
+                <button class="btn" id="export-btn">Export Data</button>
+                <button class="btn" id="import-btn">Import Data</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
+        </aside>
+
+        <main class="dashboard-content">
+            <p class="section-label">Apps</p>
+            <div class="app-grid">
+                <a href="apps/focus-flow/index.html" class="app-card">
+                    <div class="app-card-icon"><img src="assets/icons/focus-flow.svg" alt="" width="20" height="20"></div>
+                    <div class="app-card-name">Focus Flow</div>
+                    <div class="app-card-description">Distribute tasks across days</div>
+                </a>
+
+                <a href="apps/focus-timer/index.html" class="app-card">
+                    <div class="app-card-icon"><img src="assets/icons/focus-timer.svg" alt="" width="20" height="20"></div>
+                    <div class="app-card-name">Focus Timer</div>
+                    <div class="app-card-description">Pomodoro focus sessions</div>
+                </a>
+
+                <a href="apps/daily-tasks/index.html" class="app-card">
+                    <div class="app-card-icon"><img src="assets/icons/daily tasks.svg" alt="" width="20" height="20"></div>
+                    <div class="app-card-name">Daily Tasks</div>
+                    <div class="app-card-description">Simple daily to-do list</div>
+                </a>
+
+                <a href="apps/habit-tracker/index.html" class="app-card">
+                    <div class="app-card-icon"><img src="assets/icons/habit tracker.svg" alt="" width="20" height="20"></div>
+                    <div class="app-card-name">Habit Tracker</div>
+                    <div class="app-card-description">Build consistent habits</div>
+                </a>
+
+                <a href="apps/workout-planner/index.html" class="app-card">
+                    <div class="app-card-icon"><img src="assets/icons/workout tracker.svg" alt="" width="20" height="20"></div>
+                    <div class="app-card-name">Workout Tracker</div>
+                    <div class="app-card-description">Plan your workouts</div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Storage keys for all apps
+        const STORAGE_KEYS = [
+            'mono-focus-flow-data',
+            'mono-focus-timer',
+            'mono-daily-tasks',
+            'mono-habit-tracker',
+            'mono-workout-tracker'
+        ];
+
+        // Export all data to JSON file
+        function exportData() {
+            const data = {};
+
+            STORAGE_KEYS.forEach(key => {
+                const stored = localStorage.getItem(key);
+                if (stored) {
+                    try {
+                        data[key] = JSON.parse(stored);
+                    } catch (e) {
+                        data[key] = stored;
+                    }
+                }
+            });
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mono-apps-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Import data from JSON file
+        function importData(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    // Validate and import each key
+                    let importedCount = 0;
+                    STORAGE_KEYS.forEach(key => {
+                        if (data[key]) {
+                            localStorage.setItem(key, JSON.stringify(data[key]));
+                            importedCount++;
+                        }
+                    });
+
+                    if (importedCount > 0) {
+                        alert(`Successfully imported data for ${importedCount} app(s). Refresh the page to see changes.`);
+                    } else {
+                        alert('No valid app data found in the file.');
+                    }
+                } catch (error) {
+                    alert('Error importing data: Invalid file format.');
+                    console.error('Import error:', error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Event listeners
+        document.getElementById('export-btn').addEventListener('click', exportData);
+
+        document.getElementById('import-btn').addEventListener('click', () => {
+            document.getElementById('import-file').click();
+        });
+
+        document.getElementById('import-file').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (confirm('This will override your current data. Are you sure you want to continue?')) {
+                    importData(file);
+                }
+                e.target.value = ''; // Reset file input
+            }
+        });
+    </script>
+</body>
+</html>
