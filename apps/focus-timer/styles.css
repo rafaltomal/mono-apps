@@ -213,8 +213,8 @@
 /* Responsive */
 @media (max-width: 600px) {
     .timer-circle-wrapper {
-        width: 340px;
-        height: 340px;
+        width: 360px;
+        height: 360px;
     }
 
     .timer-minutes {
