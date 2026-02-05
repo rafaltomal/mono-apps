@@ -8,10 +8,10 @@ export function parseTaskList(text) {
     let id = 1;
 
     for (const line of lines) {
-        // Match lines starting with - or * (with optional whitespace)
         const trimmed = line.trim();
-        if (trimmed.match(/^[-*]\s+/)) {
-            const taskText = trimmed.replace(/^[-*]\s+/, '').trim();
+        if (trimmed) {
+            // Remove optional - or * prefix
+            const taskText = trimmed.replace(/^[-*]\s*/, '').trim();
             if (taskText) {
                 tasks.push({
                     id: id++,

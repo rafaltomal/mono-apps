@@ -1,7 +1,7 @@
 // Main application module for Focus Flow
 // Handles screen navigation, event listeners, and app state
 
-import { saveData, loadData, clearData, hasExistingData } from './storage.js';
+import { saveData, loadData, clearData, hasExistingData } from './storage.js?v=1.8';
 import {
     parseTaskList,
     tasksToText,
@@ -11,7 +11,7 @@ import {
     calculateStreak,
     getNextWorkingDay,
     parseLocalDate
-} from './calendar.js';
+} from './calendar.js?v=1.8';
 import {
     showScreen,
     renderTimeline,
@@ -26,7 +26,7 @@ import {
     setupPaceToggle,
     validateInputForm,
     showErrors
-} from './ui.js';
+} from './ui.js?v=1.8';
 
 // App state
 let selectedDate = null;
@@ -56,6 +56,15 @@ function setupEventListeners() {
     document.getElementById('edit-tasks-btn').addEventListener('click', handleEditTasks);
     document.getElementById('start-over-btn').addEventListener('click', handleStartOver);
 
+    // Add task input
+    document.getElementById('add-task-btn').addEventListener('click', handleAddTask);
+    document.getElementById('new-task-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddTask();
+        }
+    });
+
     // Modal actions
     document.getElementById('close-modal').addEventListener('click', () => hideModal('edit-modal'));
     document.getElementById('cancel-edit').addEventListener('click', () => hideModal('edit-modal'));
@@ -78,7 +87,7 @@ function handleTaskFormSubmit(e) {
     const tasks = parseTaskList(values.taskText);
 
     if (tasks.length === 0) {
-        showErrors(['No valid tasks found. Make sure each task starts with - or *']);
+        showErrors(['No valid tasks found. Enter one task per line.']);
         return;
     }
 
@@ -141,7 +150,12 @@ function renderMainView() {
     const data = loadData();
 
     renderTimeline(data.tasks, data.settings, selectedDate, handleDayClick);
-    renderTasks(data.tasks, selectedDate, handleTaskDone, handleMoveTask);
+    renderTasks(data.tasks, selectedDate, {
+        onDone: handleTaskDone,
+        onMove: handleMoveTask,
+        onDelete: handleDeleteTask,
+        onReorder: handleReorderTasks
+    });
     updateProgress(data.tasks, data.stats);
 }
 
@@ -189,6 +203,65 @@ function handleMoveTask(taskId) {
     renderMainView();
 }
 
+// Handle add new task
+function handleAddTask() {
+    const input = document.getElementById('new-task-input');
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    const data = loadData();
+
+    // Generate new task ID (max existing ID + 1)
+    const maxId = data.tasks.reduce((max, t) => Math.max(max, t.id), 0);
+    const newTask = {
+        id: maxId + 1,
+        text: text,
+        completed: false,
+        assignedDate: selectedDate
+    };
+
+    data.tasks.push(newTask);
+    saveData(data);
+
+    // Clear input and re-render
+    input.value = '';
+    renderMainView();
+}
+
+// Handle delete task
+function handleDeleteTask(taskId) {
+    const data = loadData();
+
+    // Remove task from array
+    data.tasks = data.tasks.filter(t => t.id !== taskId);
+
+    saveData(data);
+    renderMainView();
+}
+
+// Handle reorder tasks (drag and drop)
+function handleReorderTasks(newOrder) {
+    const data = loadData();
+
+    // Create a map of tasks by ID for quick lookup
+    const taskMap = new Map(data.tasks.map(t => [t.id, t]));
+
+    // Get tasks for the selected date
+    const dayTasks = data.tasks.filter(t => t.assignedDate === selectedDate);
+    const otherTasks = data.tasks.filter(t => t.assignedDate !== selectedDate);
+
+    // Reorder day tasks based on newOrder (which contains only incomplete task IDs)
+    const completedDayTasks = dayTasks.filter(t => t.completed);
+    const reorderedIncompleteTasks = newOrder.map(id => taskMap.get(id)).filter(Boolean);
+
+    // Combine: reordered incomplete tasks + completed tasks for this day + other days' tasks
+    data.tasks = [...otherTasks, ...reorderedIncompleteTasks, ...completedDayTasks];
+
+    saveData(data);
+    // Don't re-render to avoid interrupting drag - UI is already updated
+}
+
 // Handle edit tasks
 function handleEditTasks() {
     const data = loadData();
@@ -206,7 +279,7 @@ function handleEditFormSubmit(e) {
     const newTasks = parseTaskList(newTaskText);
 
     if (newTasks.length === 0) {
-        showErrors(['No valid tasks found. Make sure each task starts with - or *']);
+        showErrors(['No valid tasks found. Enter one task per line.']);
         return;
     }
 
