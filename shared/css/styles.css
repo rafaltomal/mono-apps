@@ -637,6 +637,7 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    overflow-y: auto;
 }
 
 .app-sidebar-back {

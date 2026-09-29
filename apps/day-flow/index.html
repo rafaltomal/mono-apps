@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Flow — Mono Apps</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/day-flow.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/css/styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.7">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <nav class="app-sidebar-nav">
+                <a href="../../index.html" class="app-nav-item" style="padding-left: var(--spacing-lg);">←</a>
+                <a href="../day-flow/index.html" class="app-nav-item active">
+                    <span class="app-nav-icon"><img src="../../assets/icons/day-flow.svg" alt="" width="24" height="24"></span>
+                    Day Flow
+                </a>
+                <a href="../focus-flow/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-flow.svg" alt="" width="24" height="24"></span>
+                    Focus Flow
+                </a>
+                <a href="../focus-timer/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/focus-timer.svg" alt="" width="24" height="24"></span>
+                    Focus Timer
+                </a>
+                <a href="../daily-tasks/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/daily tasks.svg" alt="" width="24" height="24"></span>
+                    Daily Tasks
+                </a>
+                <a href="../habit-tracker/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/habit tracker.svg" alt="" width="24" height="24"></span>
+                    Habit Tracker
+                </a>
+                <a href="../workout-planner/index.html" class="app-nav-item">
+                    <span class="app-nav-icon"><img src="../../assets/icons/workout tracker.svg" alt="" width="24" height="24"></span>
+                    Workout Tracker
+                </a>
+            </nav>
+        </aside>
+
+        <main class="app-main day-flow-main">
+            <a href="../../index.html" class="mobile-back-btn">← Back</a>
+            <div class="day-flow">
+                <header class="day-flow-top">
+                    <div class="mini-timer" id="mini-timer">
+                        <div class="ring-wrap">
+                            <svg class="mini-ring" viewBox="0 0 88 88" aria-hidden="true">
+                                <circle class="ring-bg" cx="44" cy="44" r="36"></circle>
+                                <circle class="ring-progress" id="ring-progress" cx="44" cy="44" r="36"></circle>
+                            </svg>
+                            <div class="ring-time" id="timer-display">25:00</div>
+                        </div>
+                        <div class="mini-details">
+                            <div class="mini-kicker" id="timer-kicker">Focus</div>
+                            <div class="mini-task" id="timer-task">
+                                <span id="timer-icon" hidden></span>
+                                <span id="timer-task-name">Nothing scheduled</span>
+                            </div>
+                            <div class="mini-meta" id="timer-meta">Drop a block on the day</div>
+                            <div class="mini-controls">
+                                <div class="mode-toggle">
+                                    <button type="button" class="mode-btn active" id="mode-work" data-mode="work">Focus</button>
+                                    <button type="button" class="mode-btn" id="mode-break" data-mode="break">Break</button>
+                                </div>
+                                <div class="time-adjust">
+                                    <button type="button" id="decrease-time" aria-label="Decrease duration">−</button>
+                                    <button type="button" id="increase-time" aria-label="Increase duration">+</button>
+                                </div>
+                                <button type="button" class="play-btn" id="play-btn" disabled aria-label="Play">▶</button>
+                            </div>
+                            <div class="mini-hint" id="timer-hint">25m focus · 5m break</div>
+                        </div>
+                    </div>
+
+                    <div class="date-nav">
+                        <button type="button" class="icon-btn" id="prev-day" aria-label="Previous day">‹</button>
+                        <div class="date-label">
+                            <div class="date-weekday" id="date-weekday">Today</div>
+                            <div class="date-rest" id="date-rest"></div>
+                        </div>
+                        <button type="button" class="icon-btn" id="next-day" aria-label="Next day">›</button>
+                        <button type="button" class="today-btn" id="today-btn">Today</button>
+                    </div>
+                </header>
+
+                <div class="day-flow-body">
+                    <aside class="palette" id="palette"></aside>
+                    <div class="calendar-scroll" id="calendar-scroll">
+                        <div class="calendar" id="calendar">
+                            <div class="time-gutter" id="time-gutter"></div>
+                            <div class="day-col" id="day-col">
+                                <div class="hour-lines" id="hour-lines"></div>
+                                <div class="events-layer" id="events"></div>
+                                <div class="drop-preview" id="drop-preview" hidden></div>
+                                <div class="now-line" id="now-line" hidden></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js?v=1.6"></script>
+</body>
+</html>
